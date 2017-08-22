@@ -147,6 +147,57 @@
     let newMergeArr = arr.concat();
     mergeSort(newMergeArr, 0, newMergeArr.length - 1);
     console.log("merge sort result = " + newMergeArr.toString());
+
+    // Parent(i) = floor((i-1)/2)，i 的父节点下标
+    // Left(i) = 2i + 1，i 的左子节点下标
+    // Right(i) = 2(i + 1)，i 的右子节点下标
+
+    let maxHeapify = (arr, index, size) => {
+        let iMax, iLeft, iRight;
+
+        while (true){
+            iMax = index;
+            iLeft = 2 * index + 1;
+            iRight = 2 * (index + 1);
+
+            if(iLeft < size && arr[iMax] < arr[iLeft]){
+                iMax = iLeft;
+            }
+
+            if(iRight < size && arr[iMax] < arr[iRight]){
+                iMax = iRight;
+            }
+
+            if(iMax !== index){
+                swap(arr, iMax, index);
+                index = iMax;
+            }else{
+                break;
+            }
+        }
+    };
+
+    let buildMaxHeap = (arr) => {
+        let iParent = Math.floor(arr.length / 2) - 1;
+        for(let i = iParent; i >= 0; i--){
+            maxHeapify(arr, i, arr.length);
+        }
+    };
+
+    let heapSort = (arr) => {
+        buildMaxHeap(arr);
+
+        for(let i = arr.length - 1; i > 0; i--){
+            swap(arr, i, 0);
+
+            //this i = size
+            maxHeapify(arr, 0, i);
+        }
+
+        return arr;
+    };
+
+    console.log('heap sort result = ' + heapSort(arr).toString());
 }
 
 {
