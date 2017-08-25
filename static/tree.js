@@ -55,6 +55,20 @@ const maxNode = (node) => {
     return null;
 };
 
+const searchNode = (node, value) => {
+    if(node === null){
+        return false;
+    }
+
+    if(node.key < value){
+        return searchNode(node.right, value);
+    }else if(node.key > value){
+        return searchNode(node.left, value);
+    }else{
+        return true;
+    }
+};
+
 class Node{
     constructor(key){
         this.key = key;
@@ -94,6 +108,11 @@ class BinarySearchTree {
     max(){
         return maxNode(this.root);
     }
+
+    search(value){
+        return searchNode(this.root, value);
+    }
+
 }
 
 let treeData = [7, 15, 5, 3, 9, 8, 10, 13, 12, 14, 20, 18, 25, 6];
@@ -119,3 +138,6 @@ console.log(preOrderTraverseResult.toString());
 console.log(binarySearchTree.min());
 
 console.log(binarySearchTree.max());
+
+console.log('tree contains 5 = ' + (binarySearchTree.search(5)));
+console.log('tree contains 105 = ' + (binarySearchTree.search(105)));
