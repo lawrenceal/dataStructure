@@ -239,3 +239,70 @@
     console.log("merge sort1 result = " +  mergeSort(arr).toString());
 
 }
+
+{
+
+    let arr = [6, 5, 3, 1, 8, 7, 2, 4, 9, 0, 6, 5, 3, 1, 8, 7, 2, 4, 9, 0];
+
+    let partition = (arr, left, right) => {
+
+        let i = left, j = right, target = arr[i];
+
+        if(i < j){
+
+            while (i < j){
+
+                while (i < j && arr[j] > target){
+                    j--;
+                }
+
+                if(i < j){
+                    arr[i] = arr[j];
+                    i++;
+                }
+
+                while (i < j && arr[i] < target){
+                    i++;
+                }
+
+                if(i < j){
+                    arr[j] = arr[i];
+                    j--;
+                }
+            }
+
+            arr[i] = target;
+        }
+
+        return i;
+    };
+
+    let quickSort = (arr, start = 0, end = arr.length - 1) => {
+
+        if(start < end){
+            let stack = [start, end];
+
+            while (stack.length){
+                let right = stack.pop(),
+                    left = stack.pop();
+
+                let index = partition(arr, left, right);
+
+                if(left < index){
+                    stack.push(left);
+                    stack.push(index - 1);
+                }
+
+                if(index < right){
+                    stack.push(index + 1);
+                    stack.push(right);
+                }
+            }
+        }
+    };
+
+    quickSort(arr);
+
+    console.log(arr);
+
+}
